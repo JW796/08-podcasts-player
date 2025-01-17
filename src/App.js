@@ -1,9 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {jwtDecode} from "jwt-decode";
 
 function App() {
+  const [user, setUser] = useState({});
+  const [loggedIn, setLoggedIn] = useState(false);
   const handleCallBack = (res) => {
-    console.log("Encoded Token" + res.credential)
+    let user = jwtDecode(res.credential);
+    setUser(user);
+    setLoggedIn(true);
   }
+
+  const handleLogOut = () => {
+    setLoggedIn(false);
+    setUser({});
+  };
 
   useEffect (() => {
     /* global google */
@@ -19,8 +29,22 @@ function App() {
   }, [])
   return (
     <div className="flex flex-col items-center">
-    <h1 className="text-xl mt-5 py-2 text-center">08 - Podcasts Player</h1>
-    <div id="SignIn"></div>
+      <h1 className="text-xl mt-5 py-2 text-center">08 - Podcasts Player</h1>
+      {loggedIn ? (
+        <>
+        <button
+        className="border py-1 px-3 rounded-full my-2"
+        onClick={handleLogOut}
+        >
+          Log Out
+        </button>
+        <h3>Hi, {user.name}</h3>
+        </>
+    ):(
+    <>
+      <div id="SignIn"></div>
+    </>
+    )}
     </div>
   );
 }
