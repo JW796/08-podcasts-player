@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { UserContext } from "./contexts/UserContext";
 import { jwtDecode } from "jwt-decode";
 import Header from "./components/Header";
@@ -6,6 +6,8 @@ import Header from "./components/Header";
 function App() {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const signInButton = useRef();
+
   const handleCallBack = (res) => {
     let user = jwtDecode(res.credential);
     setUser(user);
@@ -19,14 +21,14 @@ function App() {
         "875796848013-7hfgpnjsnvuha9geds6t5m86nsmqmdm3.apps.googleusercontent.com",
       callback: handleCallBack,
     });
-    google.accounts.id.renderButton(document.getElementById("SignIn"), {
+    google.accounts.id.renderButton(signInButton.current, {
       theme: "outline",
       size: "large",
     });
   }, [loggedIn]);
   return (
     <UserContext.Provider value={[user, setUser]}>
-      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} signInButton={signInButton} />
     </UserContext.Provider>
   );
 }
