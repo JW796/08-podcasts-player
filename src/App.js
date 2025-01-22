@@ -26,9 +26,33 @@ function App() {
       size: "large",
     });
   }, [loggedIn]);
+
+  const rssFeed = "https://cdn.atp.fm/rss/public?q21vek4t";
+  useEffect(() => {
+    fetch(rssFeed)
+      then(res => res.text()).
+      then(str => {
+        const parser = new window.DOMParser();
+        const data = parser.parseFromString(str, "text/xml");
+        const items = [];
+        itemList.forEach((el) => {
+          items.push({
+            title: el.querySelector("title").innerHTML,
+            pubDate: new Date(el.querySelector("pubDate").textContent),
+            mp3: el.querySelector("enclosure").getAttribute("url"),
+            link: el.querySelector("link").innerHTML,
+          });
+        });
+      });
+  });
+
   return (
     <UserContext.Provider value={[user, setUser]}>
-      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} signInButton={signInButton} />
+      <Header
+        loggedIn={loggedIn}
+        setLoggedIn={setLoggedIn}
+        signInButton={signInButton}
+      />
     </UserContext.Provider>
   );
 }
