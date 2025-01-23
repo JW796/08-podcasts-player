@@ -6,6 +6,8 @@ import Header from "./components/Header";
 function App() {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const [data, setData] = useState([]);
+  console.log(data)
   const signInButton = useRef();
 
   const handleCallBack = (res) => {
@@ -30,10 +32,11 @@ function App() {
   const rssFeed = "https://cdn.atp.fm/rss/public?q21vek4t";
   useEffect(() => {
     fetch(rssFeed)
-      then(res => res.text()).
-      then(str => {
+      .then(res => res.text())
+      .then(str => {
         const parser = new window.DOMParser();
         const data = parser.parseFromString(str, "text/xml");
+        const itemList = data.querySelectorAll("item");
         const items = [];
         itemList.forEach((el) => {
           items.push({
@@ -43,8 +46,9 @@ function App() {
             link: el.querySelector("link").innerHTML,
           });
         });
+        setData(items)
       });
-  });
+  }, [rssFeed]);
 
   return (
     <UserContext.Provider value={[user, setUser]}>
