@@ -57,7 +57,7 @@ function App() {
         setLoggedIn={setLoggedIn}
         signInButton={signInButton}
       />
-      <div className="pl=4">
+      <div className="pl=4 py-4">
         <h2 className="text-2xl font-medium">Accidental Tech Podcast</h2>
         {data.map((ep, i) => (
           <Episode
