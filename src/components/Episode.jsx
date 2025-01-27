@@ -15,6 +15,4 @@ const Episode = ({ title, pubDate, link, mp3 }) => {
   );
 };
 
-
-export default Episode
-
+export default Episode;

@@ -32,8 +32,8 @@ function App() {
   const rssFeed = "https://cdn.atp.fm/rss/public?q21vek4t";
   useEffect(() => {
     fetch(rssFeed)
-      .then(res => res.text())
-      .then(str => {
+      .then((res) => res.text())
+      .then((str) => {
         const parser = new window.DOMParser();
         const data = parser.parseFromString(str, "text/xml");
         const itemList = data.querySelectorAll("item");
@@ -41,12 +41,18 @@ function App() {
         itemList.forEach((el) => {
           items.push({
             title: el.querySelector("title").innerHTML,
-            pubDate: new Date(el.querySelector("pubDate").textContent).toLocaleDateString("en-US", {day: "numeric", month: "long", year: "numeric"}),
+            pubDate: new Date(
+              el.querySelector("pubDate").textContent
+            ).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }),
             mp3: el.querySelector("enclosure").getAttribute("url"),
             link: el.querySelector("link").innerHTML,
           });
         });
-        setData(items)
+        setData(items);
       });
   }, [rssFeed]);
 
@@ -57,18 +63,20 @@ function App() {
         setLoggedIn={setLoggedIn}
         signInButton={signInButton}
       />
-      <div className="pl=4 py-4">
-        <h2 className="text-2xl font-medium">Accidental Tech Podcast</h2>
-        {data.map((ep, i) => (
-          <Episode
-            key={i}
-            title={ep.title}
-            pubDate={ep.pubDate}
-            link={ep.link}
-            mp3={ep.mp3}
-          />
-        ))}
-      </div>
+      {loggedIn ? (
+        <div className="pl=4 py-4">
+          <h2 className="text-2xl font-medium">Accidental Tech Podcast</h2>
+          {data.map((ep, i) => (
+            <Episode
+              key={i}
+              title={ep.title}
+              pubDate={ep.pubDate}
+              link={ep.link}
+              mp3={ep.mp3}
+            />
+          ))}
+        </div>
+      ) : null}
     </UserContext.Provider>
   );
 }
