@@ -1,16 +1,29 @@
 const Episode = ({ title, pubDate, link, mp3 }) => {
   return (
-    <div className="pl-2 mt-2 mb-4 border w-3/4 max-w-lg py-2 px-5 rounded-lg">
-      <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="underline hover:opacity-709"
-      >
-        <p>{title}</p>
-      </a>
-      <audio src={mp3} className="my-4 px-2 w-full" controls />
-      <p>{pubDate}</p>
+    <div className=" max-w-3xl flex flex-row items-center border rounded-lg my-4">
+      <div className="pl-2 mt-2 mb-4 py-2 px-5">
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:opacity-70"
+        >
+          <p>{title}</p>
+        </a>
+        <audio src={mp3} className="my-4 px-2" controls />
+        <p>{pubDate}</p>
+      </div>
+      <div className="flex flex-col gap-1 my-2">
+        <label htmlFor="notes" className="text-gray-700 font-medium">
+          Notes
+        </label>
+        <textarea
+          id="notes"
+          className="border rounded-lg p-2"
+          placeholder="What did you think of the episode?"
+          rows={5}
+        />
+      </div>
     </div>
   );
 };

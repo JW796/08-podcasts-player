@@ -64,7 +64,7 @@ function App() {
         signInButton={signInButton}
       />
       {loggedIn ? (
-        <div className="pl=4 py-4">
+        <div className="pl=4 py-4 flex flex-col items-center">
           <h2 className="text-2xl font-medium">Accidental Tech Podcast</h2>
           {data.map((ep, i) => (
             <Episode
