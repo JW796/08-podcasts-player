@@ -65,7 +65,9 @@ function App() {
       />
       {loggedIn ? (
         <div className="pl=4 py-4 flex flex-col items-center">
-          <h2 className="text-2xl font-medium">Accidental Tech Podcast</h2>
+          <h2 className="text-2xl font-medium text-center">
+            Accidental Tech Podcast
+          </h2>
           {data.map((ep, i) => (
             <Episode
               key={i}
@@ -76,7 +78,11 @@ function App() {
             />
           ))}
         </div>
-      ) : null}
+      ) : (
+        <h3 className="text-center text-2xl mx-auto px-5 pt-6">
+          Login to Continue
+        </h3>
+      )}
     </UserContext.Provider>
   );
 }
